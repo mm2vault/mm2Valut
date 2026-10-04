@@ -1840,3 +1840,43 @@ main {
   margin: 0 auto 16px;
   opacity: 0.4;
 }
+
+
+/* Mobile polish & touch targets */
+@media (max-width: 639px) {
+  .container { padding-left: 14px; padding-right: 14px; }
+  .header-actions { gap: 4px; }
+  .logo { gap: 7px; font-size: 1rem; }
+  .logo-icon { width: 32px; height: 32px; }
+  .search-btn, .profile-btn, .hamburger { width: 38px; height: 38px; }
+  .hero { padding-top: 32px; }
+  .hero-title { font-size: clamp(1.9rem, 9vw, 2.5rem); }
+  .hero-desc { font-size: .94rem; }
+  .hero-search { padding-left: 12px; }
+  .hero-search input { min-width: 0; }
+  .hero-search-btn { padding: 10px 14px; }
+  .item-grid { gap: 10px; }
+  .item-card-body { padding: 10px; }
+  .item-card-name { font-size: .82rem; }
+  .item-card-meta { font-size: .68rem; }
+  .item-value { font-size: .85rem; }
+  .demand-dot { width: 5px; height: 5px; }
+  .modal-overlay { padding: 0; align-items: flex-end; }
+  .modal { max-height: 94vh; border-radius: 22px 22px 0 0; border-bottom: 0; }
+  .modal-body { padding: 18px 14px 28px; }
+  .detail-grid { gap: 18px; }
+  .detail-info h2 { font-size: 1.4rem; }
+  .detail-actions .btn { flex: 1; min-width: 140px; }
+  .trade-side { min-height: 300px; padding: 14px; }
+  .trade-center { padding: 4px 0; }
+  .shop-grid { gap: 12px; }
+  .shop-card-body { padding: 13px; }
+  .lb-row { gap: 9px; padding: 12px 10px; }
+  .lb-row-stat { font-size: .78rem; }
+  .profile-avatar-wrap { left: 14px; gap: 10px; }
+  .profile-name { font-size: 1.2rem; }
+  .profile-bio { font-size: .76rem; }
+}
+
+button, .nav-link, .filter-chip, .trade-add-btn { -webkit-tap-highlight-color: transparent; }
+button:focus-visible, a:focus-visible, select:focus-visible, input:focus-visible { outline: 2px solid var(--accent-cyan); outline-offset: 2px; }
