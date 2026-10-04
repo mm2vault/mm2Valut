@@ -13,7 +13,7 @@ let currentFilters = {
 
 let tradeLeft = [];
 let tradeRight = [];
-let favorites = new Set();
+let favorites = new Set(JSON.parse(localStorage.getItem('mm2vault_favorites') || '[]'));
 
 // ---------- Init ----------
 document.addEventListener('DOMContentLoaded', async () => {
@@ -28,6 +28,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   initProfile();
   renderMarket();
   updateStats();
+  renderHomeTrending();
   showPage('home');
 });
 
@@ -417,6 +418,7 @@ function toggleFavorite(id) {
     favorites.add(id);
     showToast('Added to favorites');
   }
+  localStorage.setItem('mm2vault_favorites', JSON.stringify([...favorites]));
 }
 
 // ---------- Trade ----------
@@ -576,24 +578,55 @@ function openTradePicker(side) {
 
 // ---------- Shop ----------
 function initShop() {
-  // Shop items are static in HTML; wire buy/equip buttons
+  const owned = new Set(JSON.parse(localStorage.getItem('mm2vault_owned_cosmetics') || '[]'));
+  let coins = Number(localStorage.getItem('mm2vault_coins') || '12450');
+  const updateCoins = () => {
+    document.querySelectorAll('.coin-balance span:last-child').forEach(el => el.textContent = coins.toLocaleString());
+    localStorage.setItem('mm2vault_coins', String(coins));
+  };
   document.querySelectorAll('[data-shop-action]').forEach(btn => {
+    const name = btn.dataset.name || 'Item';
+    const key = name.toLowerCase().replace(/[^a-z0-9]+/g, '-');
+    const priceText = btn.closest('.shop-card')?.querySelector('.shop-price')?.textContent || '';
+    const price = Number(priceText.replace(/[^0-9]/g, '')) || 0;
+    if (owned.has(key)) {
+      btn.textContent = 'Equip';
+      btn.dataset.shopAction = 'equip';
+      btn.classList.remove('btn-primary');
+      btn.classList.add('btn-secondary');
+    }
     btn.addEventListener('click', () => {
-      const action = btn.dataset.shopAction;
-      const name = btn.dataset.name || 'Item';
-      if (action === 'buy') {
-        btn.textContent = 'Owned';
+      if (btn.dataset.shopAction === 'buy') {
+        if (coins < price) { showToast('Not enough coins'); return; }
+        coins -= price;
+        owned.add(key);
+        localStorage.setItem('mm2vault_owned_cosmetics', JSON.stringify([...owned]));
+        btn.textContent = 'Equip';
         btn.dataset.shopAction = 'equip';
         btn.classList.remove('btn-primary');
         btn.classList.add('btn-secondary');
-        showToast(`${name} purchased!`);
-      } else if (action === 'equip') {
+        updateCoins();
+        showToast(name + ' purchased!');
+      } else if (btn.dataset.shopAction === 'equip') {
+        localStorage.setItem('mm2vault_equipped_cosmetic', key);
+        document.querySelectorAll('[data-shop-action]').forEach(other => {
+          if (other !== btn && other.dataset.shopAction === 'equip') other.disabled = false;
+        });
         btn.textContent = 'Equipped';
         btn.disabled = true;
-        showToast(`${name} equipped`);
+        showToast(name + ' equipped');
       }
     });
   });
+  updateCoins();
+}
+
+function renderHomeTrending() {
+  const grid = document.getElementById('home-trending');
+  if (!grid) return;
+  const trending = [...items].sort((a,b) => (b.demand * 10 + b.trend) - (a.demand * 10 + a.trend)).slice(0, 5);
+  grid.innerHTML = trending.map(item => createItemCard(item)).join('');
+  grid.querySelectorAll('.item-card').forEach(card => card.addEventListener('click', () => openItemDetail(card.dataset.id)));
 }
 
 // ---------- Leaderboard ----------
