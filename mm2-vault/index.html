@@ -1,0 +1,558 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <meta name="description" content="MM2 Vault — Premium Murder Mystery 2 item database, trading calculator & community platform." />
+  <title>MM2 Vault — Your Collection, Organized</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+<body>
+  <!-- HEADER -->
+  <header class="header">
+    <div class="container header-inner">
+      <a href="#" class="logo" data-page="home">
+        <div class="logo-icon">🗡️</div>
+        <div class="logo-text">MM2 <span>Vault</span></div>
+      </a>
+
+      <nav class="nav" aria-label="Main">
+        <a href="#" class="nav-link active" data-page="home">Home</a>
+        <a href="#" class="nav-link" data-page="market">Market</a>
+        <a href="#" class="nav-link" data-page="trade">Trade</a>
+        <a href="#" class="nav-link" data-page="shop">Shop</a>
+        <a href="#" class="nav-link" data-page="leaderboard">Leaderboard</a>
+      </nav>
+
+      <div class="header-actions">
+        <button class="search-btn" data-page="market" aria-label="Search">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/>
+          </svg>
+        </button>
+
+        <div class="coin-balance" title="Your coin balance">
+          <span class="coin-icon">₡</span>
+          <span>12,450</span>
+        </div>
+
+        <button class="profile-btn" data-page="profile" aria-label="Profile">
+          <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=VaultUser&backgroundColor=1e1b4b" alt="Avatar" />
+        </button>
+
+        <button class="hamburger" id="hamburger" aria-label="Menu">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Mobile Menu -->
+  <div class="mobile-menu" id="mobile-menu">
+    <a href="#" class="nav-link" data-page="home">Home</a>
+    <a href="#" class="nav-link" data-page="market">Market</a>
+    <a href="#" class="nav-link" data-page="trade">Trade</a>
+    <a href="#" class="nav-link" data-page="shop">Shop</a>
+    <a href="#" class="nav-link" data-page="leaderboard">Leaderboard</a>
+    <a href="#" class="nav-link" data-page="profile">Profile</a>
+  </div>
+
+  <main>
+    <!-- ========== HOME ========== -->
+    <section class="page active" id="page-home">
+      <div class="container">
+        <div class="hero">
+          <div class="hero-grid">
+            <div class="hero-content">
+              <h1 class="hero-title">Your MM2 collection,<br /><span>organized.</span></h1>
+              <p class="hero-desc">
+                Track values, compare trades, and explore every knife, gun & chroma in Murder Mystery 2 — all in one premium vault.
+              </p>
+              <div class="hero-search">
+                <input type="text" id="hero-search-input" placeholder="Search items, rarities, sets..." autocomplete="off" />
+                <button class="hero-search-btn" id="hero-search-btn">Search</button>
+              </div>
+            </div>
+            <div class="hero-visual">
+              <div class="hero-item-card">
+                <img src="https://via.placeholder.com/280x280/1a0a2e/00f0ff?text=Chroma+Travelers" alt="Featured Chroma" />
+                <span class="hero-item-label">Chroma Traveler's Gun</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="stats-bar">
+            <div class="stat-card">
+              <div class="stat-value" id="stat-total">—</div>
+              <div class="stat-label">Total Items</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-value" id="stat-value">—</div>
+              <div class="stat-label">Market Value</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-value" id="stat-traders">—</div>
+              <div class="stat-label">Active Traders</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-value" id="stat-listed">—</div>
+              <div class="stat-label">Listed Today</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Featured preview -->
+        <div class="section-header" style="margin-top:48px;">
+          <div>
+            <h2 class="section-title">Trending Items</h2>
+            <p class="section-subtitle">Highest demand right now</p>
+          </div>
+          <button class="btn btn-secondary" data-page="market">View Market →</button>
+        </div>
+        <div class="item-grid" id="home-trending">
+          <!-- Populated by JS on load via market render pattern; static top items for first paint -->
+        </div>
+      </div>
+    </section>
+
+    <!-- ========== MARKET ========== -->
+    <section class="page" id="page-market">
+      <div class="container" style="padding-top:32px;">
+        <div class="section-header">
+          <div>
+            <h2 class="section-title">Market</h2>
+            <p class="section-subtitle">Browse and filter every tradeable item</p>
+          </div>
+        </div>
+
+        <div class="market-search">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/>
+          </svg>
+          <input type="text" id="market-search-input" placeholder="Search by name, rarity, type..." autocomplete="off" />
+        </div>
+
+        <div class="filters">
+          <button class="filter-chip active" data-rarity="all">All</button>
+          <button class="filter-chip" data-rarity="chroma">Chroma</button>
+          <button class="filter-chip" data-rarity="ancient">Ancient</button>
+          <button class="filter-chip" data-rarity="godly">Godly</button>
+          <button class="filter-chip" data-rarity="unique">Unique</button>
+          <button class="filter-chip" data-type="all">All Types</button>
+          <button class="filter-chip" data-type="gun">Guns</button>
+          <button class="filter-chip" data-type="knife">Knives</button>
+          <select class="filter-select" id="sort-select">
+            <option value="highest">Highest Value</option>
+            <option value="lowest">Lowest Value</option>
+            <option value="demand">Highest Demand</option>
+            <option value="trending">Trending</option>
+            <option value="newest">Newest</option>
+            <option value="name">Name A–Z</option>
+          </select>
+        </div>
+
+        <div class="item-grid" id="item-grid">
+          <!-- Items rendered by JS -->
+        </div>
+      </div>
+    </section>
+
+    <!-- ========== TRADE ========== -->
+    <section class="page" id="page-trade">
+      <div class="container" style="padding-top:32px;">
+        <div class="section-header">
+          <div>
+            <h2 class="section-title">Trade Calculator</h2>
+            <p class="section-subtitle">Add items from both sides and see who wins</p>
+          </div>
+        </div>
+
+        <div class="trade-layout">
+          <div class="trade-side">
+            <div class="trade-side-header">
+              <span class="trade-side-title">Your Offer</span>
+              <span class="trade-total" id="trade-total-left">0</span>
+            </div>
+            <div class="trade-items" id="trade-items-left"></div>
+            <button class="trade-add-btn" id="trade-add-left">+ Add Item</button>
+          </div>
+
+          <div class="trade-center">
+            <div class="trade-vs">VS</div>
+            <div class="trade-result fair" id="trade-result">
+              <div class="trade-result-label">—</div>
+              <div class="trade-result-diff">Add items to compare</div>
+            </div>
+          </div>
+
+          <div class="trade-side">
+            <div class="trade-side-header">
+              <span class="trade-side-title">Their Offer</span>
+              <span class="trade-total" id="trade-total-right">0</span>
+            </div>
+            <div class="trade-items" id="trade-items-right"></div>
+            <button class="trade-add-btn" id="trade-add-right">+ Add Item</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========== SHOP ========== -->
+    <section class="page" id="page-shop">
+      <div class="container" style="padding-top:32px;">
+        <div class="section-header">
+          <div>
+            <h2 class="section-title">Cosmetic Shop</h2>
+            <p class="section-subtitle">Premium frames, badges & profile decorations</p>
+          </div>
+        </div>
+
+        <div class="shop-grid">
+          <article class="shop-card">
+            <div class="shop-preview">
+              <div class="shop-preview-content">
+                <div class="shop-preview-avatar">
+                  🗡️
+                  <div class="shop-preview-frame"></div>
+                </div>
+                <span style="font-size:0.8rem;color:var(--accent-cyan);">Neon Pulse Frame</span>
+              </div>
+            </div>
+            <div class="shop-card-body">
+              <h3 class="shop-card-name">Neon Pulse Frame</h3>
+              <p class="shop-card-desc">Animated cyan glow around your avatar. Exclusive seasonal cosmetic.</p>
+              <div class="shop-card-footer">
+                <span class="shop-price"><span class="coin-icon" style="width:16px;height:16px;font-size:0.6rem;">₡</span> 2,500</span>
+                <button class="btn btn-primary" data-shop-action="buy" data-name="Neon Pulse Frame">Buy</button>
+              </div>
+            </div>
+          </article>
+
+          <article class="shop-card">
+            <div class="shop-preview">
+              <div class="shop-preview-content">
+                <div class="shop-preview-avatar" style="border-color:#f59e0b;">
+                  👑
+                  <div class="shop-preview-frame" style="border-color:#f59e0b;box-shadow:0 0 16px rgba(245,158,11,0.4);"></div>
+                </div>
+                <span style="font-size:0.8rem;color:var(--accent-gold);">Golden Crown Frame</span>
+              </div>
+            </div>
+            <div class="shop-card-body">
+              <h3 class="shop-card-name">Golden Crown Frame</h3>
+              <p class="shop-card-desc">Royal gold border with subtle shimmer. Shows prestige on your profile.</p>
+              <div class="shop-card-footer">
+                <span class="shop-price"><span class="coin-icon" style="width:16px;height:16px;font-size:0.6rem;">₡</span> 5,000</span>
+                <button class="btn btn-primary" data-shop-action="buy" data-name="Golden Crown Frame">Buy</button>
+              </div>
+            </div>
+          </article>
+
+          <article class="shop-card">
+            <div class="shop-preview">
+              <div class="shop-preview-content">
+                <div class="shop-preview-avatar" style="border-color:#ec4899;">
+                  💜
+                </div>
+                <span style="font-size:0.8rem;color:var(--accent-pink);">Void Badge</span>
+              </div>
+            </div>
+            <div class="shop-card-body">
+              <h3 class="shop-card-name">Void Badge</h3>
+              <p class="shop-card-desc">Dark purple profile badge. Displayed under your username.</p>
+              <div class="shop-card-footer">
+                <span class="shop-price"><span class="coin-icon" style="width:16px;height:16px;font-size:0.6rem;">₡</span> 1,200</span>
+                <button class="btn btn-primary" data-shop-action="buy" data-name="Void Badge">Buy</button>
+              </div>
+            </div>
+          </article>
+
+          <article class="shop-card">
+            <div class="shop-preview">
+              <div class="shop-preview-content">
+                <div class="shop-preview-avatar" style="border-color:#22c55e;">
+                  ✨
+                  <div class="shop-preview-frame" style="border-color:#22c55e;box-shadow:0 0 16px rgba(34,197,94,0.35);"></div>
+                </div>
+                <span style="font-size:0.8rem;color:#22c55e;">Emerald Aura</span>
+              </div>
+            </div>
+            <div class="shop-card-body">
+              <h3 class="shop-card-name">Emerald Aura Frame</h3>
+              <p class="shop-card-desc">Soft green animated ring. Perfect for nature-themed inventories.</p>
+              <div class="shop-card-footer">
+                <span class="shop-price"><span class="coin-icon" style="width:16px;height:16px;font-size:0.6rem;">₡</span> 3,000</span>
+                <button class="btn btn-primary" data-shop-action="buy" data-name="Emerald Aura Frame">Buy</button>
+              </div>
+            </div>
+          </article>
+
+          <article class="shop-card">
+            <div class="shop-preview">
+              <div class="shop-preview-content">
+                <div class="shop-preview-avatar">
+                  🏆
+                </div>
+                <span style="font-size:0.8rem;color:var(--primary-light);">Trader Elite Badge</span>
+              </div>
+            </div>
+            <div class="shop-card-body">
+              <h3 class="shop-card-name">Trader Elite Badge</h3>
+              <p class="shop-card-desc">Awarded for high trade volume. Prestige indicator on leaderboards.</p>
+              <div class="shop-card-footer">
+                <span class="shop-price"><span class="coin-icon" style="width:16px;height:16px;font-size:0.6rem;">₡</span> 8,000</span>
+                <button class="btn btn-primary" data-shop-action="buy" data-name="Trader Elite Badge">Buy</button>
+              </div>
+            </div>
+          </article>
+
+          <article class="shop-card">
+            <div class="shop-preview">
+              <div class="shop-preview-content">
+                <div class="shop-preview-avatar" style="border-color:#22d3ee;">
+                  🌌
+                  <div class="shop-preview-frame" style="border-color:#a855f7;box-shadow:0 0 20px rgba(168,85,247,0.45);"></div>
+                </div>
+                <span style="font-size:0.8rem;color:var(--primary-light);">Galaxy Border</span>
+              </div>
+            </div>
+            <div class="shop-card-body">
+              <h3 class="shop-card-name">Galaxy Border</h3>
+              <p class="shop-card-desc">Animated purple-cyan constellation frame. Limited edition.</p>
+              <div class="shop-card-footer">
+                <span class="shop-price"><span class="coin-icon" style="width:16px;height:16px;font-size:0.6rem;">₡</span> 6,500</span>
+                <button class="btn btn-primary" data-shop-action="buy" data-name="Galaxy Border">Buy</button>
+              </div>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========== LEADERBOARD ========== -->
+    <section class="page" id="page-leaderboard">
+      <div class="container" style="padding-top:32px;">
+        <div class="section-header">
+          <div>
+            <h2 class="section-title">Leaderboard</h2>
+            <p class="section-subtitle">Top collectors & traders</p>
+          </div>
+        </div>
+
+        <div class="lb-filters">
+          <button class="filter-chip lb-filter active" data-period="all-time">All Time</button>
+          <button class="filter-chip lb-filter" data-period="monthly">Monthly</button>
+          <button class="filter-chip lb-filter" data-period="weekly">Weekly</button>
+        </div>
+
+        <div class="lb-podium">
+          <div class="lb-card rank-1">
+            <span class="lb-rank">1</span>
+            <div class="lb-avatar">
+              <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=TopTrader&backgroundColor=1e1b4b" alt="" />
+            </div>
+            <div class="lb-name">ShadowBlade</div>
+            <div class="lb-value">482.5M value</div>
+          </div>
+          <div class="lb-card rank-2">
+            <span class="lb-rank">2</span>
+            <div class="lb-avatar">
+              <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=CollectorX&backgroundColor=312e81" alt="" />
+            </div>
+            <div class="lb-name">ChromaKing</div>
+            <div class="lb-value">312.1M value</div>
+          </div>
+          <div class="lb-card rank-3">
+            <span class="lb-rank">3</span>
+            <div class="lb-avatar">
+              <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=VaultMaster&backgroundColor=4c1d95" alt="" />
+            </div>
+            <div class="lb-name">AncientHunter</div>
+            <div class="lb-value">198.7M value</div>
+          </div>
+        </div>
+
+        <div class="lb-list">
+          <div class="lb-row">
+            <span class="lb-row-rank">4</span>
+            <div class="lb-row-avatar"><img src="https://api.dicebear.com/7.x/avataaars/svg?seed=User4&backgroundColor=1e1b4b" alt="" /></div>
+            <span class="lb-row-name">GodlyGrind</span>
+            <span class="lb-row-stat">156.2M</span>
+          </div>
+          <div class="lb-row">
+            <span class="lb-row-rank">5</span>
+            <div class="lb-row-avatar"><img src="https://api.dicebear.com/7.x/avataaars/svg?seed=User5&backgroundColor=312e81" alt="" /></div>
+            <span class="lb-row-name">TradeWizard</span>
+            <span class="lb-row-stat">124.8M</span>
+          </div>
+          <div class="lb-row">
+            <span class="lb-row-rank">6</span>
+            <div class="lb-row-avatar"><img src="https://api.dicebear.com/7.x/avataaars/svg?seed=User6&backgroundColor=4c1d95" alt="" /></div>
+            <span class="lb-row-name">KnifeCollector</span>
+            <span class="lb-row-stat">98.4M</span>
+          </div>
+          <div class="lb-row">
+            <span class="lb-row-rank">7</span>
+            <div class="lb-row-avatar"><img src="https://api.dicebear.com/7.x/avataaars/svg?seed=User7&backgroundColor=0e7490" alt="" /></div>
+            <span class="lb-row-name">PetMaster99</span>
+            <span class="lb-row-stat">76.1M</span>
+          </div>
+          <div class="lb-row">
+            <span class="lb-row-rank">8</span>
+            <div class="lb-row-avatar"><img src="https://api.dicebear.com/7.x/avataaars/svg?seed=User8&backgroundColor=1e1b4b" alt="" /></div>
+            <span class="lb-row-name">FairTrader</span>
+            <span class="lb-row-stat">54.3M</span>
+          </div>
+          <div class="lb-row">
+            <span class="lb-row-rank">9</span>
+            <div class="lb-row-avatar"><img src="https://api.dicebear.com/7.x/avataaars/svg?seed=User9&backgroundColor=312e81" alt="" /></div>
+            <span class="lb-row-name">RareFinds</span>
+            <span class="lb-row-stat">41.9M</span>
+          </div>
+          <div class="lb-row">
+            <span class="lb-row-rank">10</span>
+            <div class="lb-row-avatar"><img src="https://api.dicebear.com/7.x/avataaars/svg?seed=User10&backgroundColor=4c1d95" alt="" /></div>
+            <span class="lb-row-name">VaultUser</span>
+            <span class="lb-row-stat">28.6M</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========== PROFILE ========== -->
+    <section class="page" id="page-profile">
+      <div class="container" style="padding-top:32px;">
+        <div class="profile-banner">
+          <div class="profile-avatar-wrap">
+            <div class="profile-avatar">
+              <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=VaultUser&backgroundColor=1e1b4b" alt="Avatar" />
+              <div class="profile-avatar-frame"></div>
+            </div>
+            <div class="profile-name-block">
+              <div class="profile-name">VaultUser</div>
+              <div class="profile-bio">Collector • Fair trader • Chroma hunter</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="profile-content">
+          <div class="profile-stats-row">
+            <div class="profile-stat-pill">
+              <span class="coin-icon" style="width:16px;height:16px;font-size:0.6rem;">₡</span>
+              <strong>12,450</strong> coins
+            </div>
+            <div class="profile-stat-pill">
+              <strong>47</strong> items
+            </div>
+            <div class="profile-stat-pill">
+              <strong>28.6M</strong> inventory value
+            </div>
+            <div class="profile-stat-pill">
+              <strong>132</strong> trades
+            </div>
+          </div>
+
+          <div class="profile-badges">
+            <div class="profile-badge" title="Early Adopter">🌟</div>
+            <div class="profile-badge" title="Fair Trader">⚖️</div>
+            <div class="profile-badge" title="Chroma Collector">🌈</div>
+            <div class="profile-badge" title="100+ Trades">💯</div>
+          </div>
+
+          <div class="profile-tabs">
+            <button class="profile-tab active" data-tab="inventory">Inventory</button>
+            <button class="profile-tab" data-tab="cosmetics">Equipped</button>
+            <button class="profile-tab" data-tab="stats">Statistics</button>
+          </div>
+
+          <div class="profile-panel" data-panel="inventory">
+            <div class="item-grid" id="profile-inventory">
+              <!-- Will show a subset -->
+            </div>
+          </div>
+          <div class="profile-panel" data-panel="cosmetics" style="display:none;">
+            <div class="shop-grid" style="max-width:600px;">
+              <article class="shop-card">
+                <div class="shop-preview">
+                  <div class="shop-preview-content">
+                    <div class="shop-preview-avatar">
+                      🗡️
+                      <div class="shop-preview-frame"></div>
+                    </div>
+                  </div>
+                </div>
+                <div class="shop-card-body">
+                  <h3 class="shop-card-name">Neon Pulse Frame</h3>
+                  <p class="shop-card-desc">Currently equipped</p>
+                  <button class="btn btn-secondary" disabled>Equipped</button>
+                </div>
+              </article>
+            </div>
+          </div>
+          <div class="profile-panel" data-panel="stats" style="display:none;">
+            <div class="detail-stats" style="max-width:480px;">
+              <div class="detail-stat">
+                <div class="detail-stat-label">Total Trades</div>
+                <div class="detail-stat-value">132</div>
+              </div>
+              <div class="detail-stat">
+                <div class="detail-stat-label">Win Rate</div>
+                <div class="detail-stat-value">61%</div>
+              </div>
+              <div class="detail-stat">
+                <div class="detail-stat-label">Items Owned</div>
+                <div class="detail-stat-value">47</div>
+              </div>
+              <div class="detail-stat">
+                <div class="detail-stat-label">Inventory Rank</div>
+                <div class="detail-stat-value">#10</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Modal Overlay -->
+  <div class="modal-overlay" id="modal-overlay">
+    <div class="modal" id="item-modal" role="dialog" aria-modal="true"></div>
+  </div>
+
+  <footer class="footer">
+    <div class="container">
+      <p>MM2 Vault — Premium trading & inventory platform for Murder Mystery 2.</p>
+      <p style="margin-top:8px;opacity:0.7;">Not affiliated with Roblox or Nikilis. Values are community estimates.</p>
+    </div>
+  </footer>
+
+  <script src="js/app.js"></script>
+  <script>
+    // Populate home trending & profile inventory after items load
+    document.addEventListener('DOMContentLoaded', () => {
+      setTimeout(() => {
+        if (typeof items !== 'undefined' && items.length) {
+          const trending = [...items].sort((a,b) => b.demand - a.demand).slice(0, 5);
+          const homeGrid = document.getElementById('home-trending');
+          if (homeGrid) {
+            homeGrid.innerHTML = trending.map(item => createItemCard(item)).join('');
+            homeGrid.querySelectorAll('.item-card').forEach(card => {
+              card.addEventListener('click', () => openItemDetail(card.dataset.id));
+            });
+          }
+          const inv = document.getElementById('profile-inventory');
+          if (inv) {
+            inv.innerHTML = items.slice(0, 8).map(item => createItemCard(item)).join('');
+            inv.querySelectorAll('.item-card').forEach(card => {
+              card.addEventListener('click', () => openItemDetail(card.dataset.id));
+            });
+          }
+        }
+      }, 300);
+    });
+  </script>
+</body>
+</html>
