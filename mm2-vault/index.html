@@ -64,56 +64,70 @@
     <!-- ========== HOME ========== -->
     <section class="page active" id="page-home">
       <div class="container">
-        <div class="hero">
-          <div class="hero-grid">
-            <div class="hero-content">
-              <h1 class="hero-title">Your MM2 collection,<br /><span>organized.</span></h1>
-              <p class="hero-desc">
-                Track values, compare trades, and explore every knife, gun & chroma in Murder Mystery 2 — all in one premium vault.
-              </p>
-              <div class="hero-search">
-                <input type="text" id="hero-search-input" placeholder="Search items, rarities, sets..." autocomplete="off" />
-                <button class="hero-search-btn" id="hero-search-btn">Search</button>
-              </div>
+        <div class="vault-hero">
+          <div class="vault-hero-noise"></div>
+          <div class="vault-hero-copy">
+            <div class="eyebrow"><span class="eyebrow-dot"></span> THE ULTIMATE MM2 MARKET HUB</div>
+            <h1>Build your <span>vault.</span><br/>Trade like a pro.</h1>
+            <p>Discover values, compare trades and show off your collection in a faster, cleaner MM2 experience.</p>
+            <div class="vault-actions">
+              <button class="vault-cta" data-page="market">Explore Market <span>→</span></button>
+              <button class="vault-ghost" data-page="trade">Open Trade Calculator</button>
             </div>
-            <div class="hero-visual">
-              <div class="hero-item-card">
-                <img src="https://via.placeholder.com/280x280/1a0a2e/00f0ff?text=Chroma+Travelers" alt="Featured Chroma" />
-                <span class="hero-item-label">Chroma Traveler's Gun</span>
-              </div>
+            <div class="vault-trust">
+              <span>✦ Live item database</span><span>•</span><span>⚡ Fast trade checks</span><span>•</span><span>◈ Collector focused</span>
             </div>
           </div>
-
-          <div class="stats-bar">
-            <div class="stat-card">
-              <div class="stat-value" id="stat-total">—</div>
-              <div class="stat-label">Total Items</div>
+          <div class="vault-hero-stage">
+            <div class="orbit orbit-a"></div><div class="orbit orbit-b"></div>
+            <div class="featured-ribbon">FEATURED <span>✦</span></div>
+            <div class="featured-item">
+              <div class="featured-glow"></div>
+              <div class="featured-top"><span>CHROMA</span><span id="featured-trend">TRENDING ↑</span></div>
+              <img id="hero-featured-image" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='360' height='360'%3E%3Crect width='100%25' height='100%25' fill='%23131a2d'/%3E%3Ctext x='50%25' y='52%25' fill='%23a78bfa' font-size='22' text-anchor='middle' font-family='Arial'%3EMM2 VAULT%3C/text%3E%3C/svg%3E" alt="Featured MM2 item" />
+              <div class="featured-bottom"><strong id="featured-name">Chroma Traveler's Gun</strong><span id="featured-value">— value</span></div>
             </div>
-            <div class="stat-card">
-              <div class="stat-value" id="stat-value">—</div>
-              <div class="stat-label">Market Value</div>
-            </div>
-            <div class="stat-card">
-              <div class="stat-value" id="stat-traders">—</div>
-              <div class="stat-label">Active Traders</div>
-            </div>
-            <div class="stat-card">
-              <div class="stat-value" id="stat-listed">—</div>
-              <div class="stat-label">Listed Today</div>
-            </div>
+          </div>
+          <div class="vault-stat-strip">
+            <div><b id="stat-total">—</b><span>Items indexed</span></div>
+            <div><b id="stat-value">—</b><span>Total market value</span></div>
+            <div><b id="stat-traders">—</b><span>Active traders</span></div>
+            <div><b id="stat-listed">—</b><span>Listed today</span></div>
           </div>
         </div>
 
-        <!-- Featured preview -->
-        <div class="section-header" style="margin-top:48px;">
-          <div>
-            <h2 class="section-title">Trending Items</h2>
-            <p class="section-subtitle">Highest demand right now</p>
-          </div>
-          <button class="btn btn-secondary" data-page="market">View Market →</button>
+        <div class="home-quick-grid">
+          <button class="quick-card quick-market" data-page="market">
+            <span class="quick-icon">⌕</span><span><b>Browse Market</b><small>Filter every knife & gun</small></span><strong>→</strong>
+          </button>
+          <button class="quick-card quick-trade" data-page="trade">
+            <span class="quick-icon">⇄</span><span><b>Check a Trade</b><small>Instant WIN / FAIR / LOSE</small></span><strong>→</strong>
+          </button>
+          <button class="quick-card quick-shop" data-page="shop">
+            <span class="quick-icon">✦</span><span><b>Customize Profile</b><small>Frames, badges & cosmetics</small></span><strong>→</strong>
+          </button>
         </div>
-        <div class="item-grid" id="home-trending">
-          <!-- Populated by JS on load via market render pattern; static top items for first paint -->
+
+        <div class="section-header home-section-head">
+          <div><div class="section-kicker">DISCOVER</div><h2 class="section-title">Trending right now</h2><p class="section-subtitle">The items collectors are watching.</p></div>
+          <button class="btn btn-secondary" data-page="market">View all items →</button>
+        </div>
+        <div class="item-grid home-trending-grid" id="home-trending"></div>
+
+        <div class="home-bottom-grid">
+          <div class="home-panel">
+            <div class="home-panel-head"><div><span class="section-kicker">TOOLS</span><h3>Everything in one vault</h3></div><span class="panel-mark">MM2</span></div>
+            <div class="tool-row" data-page="trade"><span>⇄</span><div><b>Trade Calculator</b><small>Compare both sides before you accept.</small></div><i>→</i></div>
+            <div class="tool-row" data-page="shop"><span>✦</span><div><b>Cosmetic Shop</b><small>Make your profile look like yours.</small></div><i>→</i></div>
+            <div class="tool-row" data-page="leaderboard"><span>♛</span><div><b>Leaderboard</b><small>See who is dominating the vault.</small></div><i>→</i></div>
+          </div>
+          <div class="home-panel spotlight-panel">
+            <div class="spotlight-orb"></div>
+            <span class="section-kicker">COLLECTOR SPOTLIGHT</span>
+            <h3>Your inventory deserves a better home.</h3>
+            <p>Track favorites, compare values and build your collection without the clutter.</p>
+            <button class="vault-ghost" data-page="profile">Open Profile →</button>
+          </div>
         </div>
       </div>
     </section>
