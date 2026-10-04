@@ -627,6 +627,18 @@ function renderHomeTrending() {
   const trending = [...items].sort((a,b) => (b.demand * 10 + b.trend) - (a.demand * 10 + a.trend)).slice(0, 5);
   grid.innerHTML = trending.map(item => createItemCard(item)).join('');
   grid.querySelectorAll('.item-card').forEach(card => card.addEventListener('click', () => openItemDetail(card.dataset.id)));
+
+  const featured = trending[0];
+  if (featured) {
+    const img = document.getElementById('hero-featured-image');
+    const name = document.getElementById('featured-name');
+    const value = document.getElementById('featured-value');
+    const trend = document.getElementById('featured-trend');
+    if (img) { img.src = featured.image; img.alt = featured.name; }
+    if (name) name.textContent = featured.name;
+    if (value) value.textContent = formatValue(featured.value) + ' value';
+    if (trend) trend.textContent = (featured.trend >= 0 ? 'TRENDING ↑' : 'DROPPING ↓');
+  }
 }
 
 // ---------- Leaderboard ----------
